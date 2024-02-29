@@ -51,13 +51,13 @@ class AntivirusApp(tk.Tk):
             animation = AntivirusAnimation(self, "Scanning Files", self.simulate_scan(directory))
 
     def device_security(self):
-        animation = AntivirusAnimation(self, "Checking Device Security", iter([{"Result": "Device security check completed."}]))
+        animation = AntivirusAnimation(self, "Checking Device Security", self.device_security_result)
 
     def network_security(self):
-        animation = AntivirusAnimation(self, "Checking Network Security", lambda: self.show_result("Network security check completed."))
+        animation = AntivirusAnimation(self, "Checking Network Security", self.network_security_result)
 
     def browser_control(self):
-        animation = AntivirusAnimation(self, "Controlling Browser Security", lambda: self.show_result("Browser control completed."))
+        animation = AntivirusAnimation(self, "Controlling Browser Security", self.browser_control_result)
 
     def simulate_scan(self, directory):
         file_count = sum(len(files) for _, _, files in os.walk(directory))
@@ -89,6 +89,15 @@ class AntivirusApp(tk.Tk):
 
     def show_result(self, result):
         messagebox.showinfo("Task Completed", result)
+
+    def device_security_result(self):
+        return iter([{"Result": "Device security check completed."}])
+
+    def network_security_result(self):
+        return self.show_result("Network security check completed.")
+
+    def browser_control_result(self):
+        return self.show_result("Browser control completed.")
 
 if __name__ == "__main__":
     app = AntivirusApp()
